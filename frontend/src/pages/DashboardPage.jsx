@@ -61,7 +61,7 @@ function renderHighlightedText(text, query) {
           py: 0.05,
           borderRadius: 0.75,
           color: 'inherit',
-          background: 'rgba(124, 58, 237, 0.16)'
+          background: 'rgba(0, 64, 197, 0.12)'
         }}
       >
         {part}
@@ -165,13 +165,13 @@ export default function DashboardPage({ api, user, showMessage }) {
       {dashboard ? (
         <>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Total" value={dashboard.totalDocuments} accent="#0f62fe" /></Grid>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Draft" value={dashboard.draftDocuments} accent="#64748b" /></Grid>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Submitted" value={dashboard.submittedDocuments} accent="#0284c7" /></Grid>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Under review" value={dashboard.underReviewDocuments} accent="#d97706" /></Grid>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Approved" value={dashboard.approvedDocuments} accent="#16a34a" /></Grid>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Unread alerts" value={dashboard.unreadNotifications} accent="#7c3aed" /></Grid>
-            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Overdue reminders" value={dashboard.overdueNotifications || 0} accent="#dc2626" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Total" value={dashboard.totalDocuments} accent="#001e50" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Draft" value={dashboard.draftDocuments} accent="#8b8b8b" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Submitted" value={dashboard.submittedDocuments} accent="#0040c5" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Under review" value={dashboard.underReviewDocuments} accent="#b7791f" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Approved" value={dashboard.approvedDocuments} accent="#00b140" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Unread alerts" value={dashboard.unreadNotifications} accent="#002733" /></Grid>
+            <Grid item xs={12} sm={6} lg={2}><MetricCard label="Overdue reminders" value={dashboard.overdueNotifications || 0} accent="#b00020" /></Grid>
           </Grid>
 
           <Grid container spacing={2}>
@@ -245,31 +245,7 @@ export default function DashboardPage({ api, user, showMessage }) {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-end',
-              '@keyframes aiPulse': {
-                '0%': {
-                  transform: 'scale(1)',
-                  boxShadow: '0 18px 40px rgba(124, 58, 237, 0.35)'
-                },
-                '50%': {
-                  transform: 'scale(1.03)',
-                  boxShadow: '0 22px 48px rgba(37, 99, 235, 0.32)'
-                },
-                '100%': {
-                  transform: 'scale(1)',
-                  boxShadow: '0 18px 40px rgba(124, 58, 237, 0.35)'
-                  }
-                },
-                '@keyframes aiBlink': {
-                  '0%, 100%': {
-                    opacity: 1,
-                    textShadow: '0 0 0 rgba(255,255,255,0)'
-                  },
-                  '50%': {
-                    opacity: 0.72,
-                    textShadow: '0 0 10px rgba(255,255,255,0.55)'
-                  }
-                },
-                '@keyframes resultFadeIn': {
+              '@keyframes resultFadeIn': {
                   '0%': {
                     opacity: 0,
                     transform: 'translateY(8px)'
@@ -288,20 +264,12 @@ export default function DashboardPage({ api, user, showMessage }) {
                   maxWidth: '100%',
                   mb: 1.5,
                   display: 'flex',
-                  borderRadius: 4,
-                  boxShadow: '0 24px 60px rgba(15, 23, 42, 0.18)',
-                  border: '1px solid rgba(255, 255, 255, 0.28)',
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,250,252,0.82) 100%)',
-                  backdropFilter: 'blur(18px)',
+                  borderRadius: 2,
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.10)',
+                  border: '1px solid #dddddd',
+                  backgroundColor: 'background.paper',
                   overflow: 'hidden',
-                  position: 'relative',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(135deg, rgba(124,58,237,0.10) 0%, rgba(37,99,235,0.06) 55%, rgba(255,255,255,0) 100%)',
-                    pointerEvents: 'none'
-                  }
+                  position: 'relative'
                 }}
               >
                 <CardContent sx={{ p: 2, position: 'relative', display: 'flex', flexDirection: 'column' }}>
@@ -314,9 +282,8 @@ export default function DashboardPage({ api, user, showMessage }) {
                           borderRadius: '50%',
                           display: 'grid',
                           placeItems: 'center',
-                          color: '#fff',
-                          background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)',
-                          boxShadow: '0 10px 24px rgba(124, 58, 237, 0.24)'
+                          color: '#ffffff',
+                          backgroundColor: '#002733'
                         }}
                       >
                         <SmartToyOutlinedIcon sx={askAiRobotIconSx.avatar} />
@@ -344,10 +311,9 @@ export default function DashboardPage({ api, user, showMessage }) {
                           maxWidth: '88%',
                           px: 1.5,
                           py: 1.1,
-                          borderRadius: 3,
-                          background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)',
-                          color: '#fff',
-                          boxShadow: '0 10px 26px rgba(37, 99, 235, 0.18)'
+                          borderRadius: 1.5,
+                          backgroundColor: '#001e50',
+                          color: '#ffffff'
                         }}
                       >
                         <Typography variant="caption" sx={{ opacity: 0.88, display: 'block', mb: 0.4 }}>
@@ -366,10 +332,9 @@ export default function DashboardPage({ api, user, showMessage }) {
                           maxWidth: '92%',
                           px: 1.6,
                           py: 1.3,
-                          borderRadius: 3,
-                          backgroundColor: 'rgba(255, 255, 255, 0.72)',
-                          border: '1px solid rgba(148, 163, 184, 0.18)',
-                          boxShadow: '0 12px 30px rgba(15, 23, 42, 0.08)'
+                          borderRadius: 1.5,
+                          backgroundColor: '#f5f5f5',
+                          border: '1px solid #dddddd'
                         }}
                       >
                         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.75 }}>
@@ -380,8 +345,8 @@ export default function DashboardPage({ api, user, showMessage }) {
                               borderRadius: '50%',
                               display: 'grid',
                               placeItems: 'center',
-                              color: '#fff',
-                              background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)'
+                              color: '#ffffff',
+                              backgroundColor: '#002733'
                             }}
                           >
                             <SmartToyOutlinedIcon sx={askAiRobotIconSx.responseAvatar} />
@@ -432,14 +397,14 @@ export default function DashboardPage({ api, user, showMessage }) {
                             cursor: 'pointer',
                             alignItems: 'flex-start',
                             gap: 1.5,
-                            borderBottom: '1px solid rgba(148, 163, 184, 0.18)',
-                            borderRadius: 3,
+                            borderBottom: '1px solid #e5e5e5',
+                            borderRadius: 1.5,
                             transition: 'background-color 160ms ease, transform 160ms ease',
                             animation: 'resultFadeIn 220ms ease',
                             animationDelay: `${Math.min(index * 60, 240)}ms`,
                             animationFillMode: 'both',
                             '&:hover': {
-                              backgroundColor: 'rgba(124, 58, 237, 0.06)',
+                              backgroundColor: '#f0f6ff',
                               transform: 'translateY(-1px)'
                             }
                           }}
@@ -512,9 +477,9 @@ export default function DashboardPage({ api, user, showMessage }) {
                             py: 3,
                             px: 2,
                             textAlign: 'center',
-                            borderRadius: 3,
-                            backgroundColor: 'rgba(255, 255, 255, 0.58)',
-                            border: '1px dashed rgba(148, 163, 184, 0.35)'
+                            borderRadius: 1.5,
+                            backgroundColor: '#f5f5f5',
+                            border: '1px dashed #cccccc'
                           }}
                         >
                           <Box
@@ -526,8 +491,8 @@ export default function DashboardPage({ api, user, showMessage }) {
                               borderRadius: '50%',
                               display: 'grid',
                               placeItems: 'center',
-                              color: '#fff',
-                              background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)'
+                              color: '#ffffff',
+                              backgroundColor: '#002733'
                             }}
                           >
                             <SmartToyOutlinedIcon sx={askAiRobotIconSx.emptyStateAvatar} />
@@ -547,8 +512,7 @@ export default function DashboardPage({ api, user, showMessage }) {
                     sx={{
                       mt: 2,
                       pt: 1.75,
-                      borderTop: '1px solid rgba(148, 163, 184, 0.18)',
-                      background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.38) 24%, rgba(255,255,255,0.66) 100%)'
+                      borderTop: '1px solid #dddddd'
                     }}
                   >
                     <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.25, px: 0.25 }}>
@@ -565,10 +529,10 @@ export default function DashboardPage({ api, user, showMessage }) {
                           variant="outlined"
                           onClick={() => runChatSearch(suggestion)}
                           sx={{
-                            borderColor: 'rgba(124, 58, 237, 0.22)',
-                            backgroundColor: 'rgba(255, 255, 255, 0.58)',
+                            borderColor: '#cccccc',
+                            backgroundColor: '#ffffff',
                             '&:hover': {
-                              backgroundColor: 'rgba(124, 58, 237, 0.08)'
+                              backgroundColor: '#f5f5f5'
                             }
                           }}
                         />
@@ -604,7 +568,7 @@ export default function DashboardPage({ api, user, showMessage }) {
                         onClick={runChatSearch}
                         disabled={chatbotLoading}
                         startIcon={<SmartToyOutlinedIcon sx={askAiRobotIconSx.buttonStart} />}
-                        sx={{ px: 2.5, minWidth: { sm: 132 }, borderRadius: 999 }}
+                        sx={{ px: 2.5, minWidth: { sm: 132 } }}
                       >
                         {chatbotLoading ? 'Thinking...' : 'Ask AI'}
                       </Button>
@@ -620,27 +584,21 @@ export default function DashboardPage({ api, user, showMessage }) {
               onClick={() => setChatbotOpen((open) => !open)}
               sx={{
                 px: 2.5,
-                height: 56,
-                borderRadius: 999,
-                color: '#fff',
-                background: 'linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)',
-                boxShadow: '0 18px 40px rgba(124, 58, 237, 0.35)',
-                animation: chatbotOpen ? 'none' : 'aiPulse 3.2s ease-in-out infinite',
-                transition: 'transform 160ms ease, box-shadow 160ms ease',
+                height: 52,
+                borderRadius: 1,
+                color: '#ffffff',
+                backgroundColor: '#001e50',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.16)',
+                transition: 'background-color 160ms ease',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #6d28d9 0%, #1d4ed8 100%)',
-                  transform: 'translateY(-1px)',
-                  boxShadow: '0 22px 48px rgba(124, 58, 237, 0.42)'
+                  backgroundColor: '#0040c5'
                 }
               }}
             >
               <AskAiLabel
                 iconSx={askAiRobotIconSx.fab}
                 spacing={0.9}
-                textSx={{
-                  letterSpacing: 0.2,
-                  animation: chatbotOpen ? 'none' : 'aiBlink 1.9s ease-in-out infinite'
-                }}
+                textSx={{ letterSpacing: 0.2 }}
               />
             </Fab>
           </Box>

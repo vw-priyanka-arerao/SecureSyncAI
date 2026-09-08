@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Badge,
   AppBar,
-  Avatar,
   Box,
   Button,
   Drawer,
@@ -28,6 +27,7 @@ import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import DashboardPage from '../pages/DashboardPage';
 import DocumentsPage from '../pages/DocumentsPage';
 import NotificationsPage from '../pages/NotificationsPage';
@@ -98,29 +98,52 @@ export default function AppShell({ user, api, onLogout }) {
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <AppBar position="fixed" sx={{ width: { md: `calc(100% - ${drawerWidth}px)` }, ml: { md: `${drawerWidth}px` } }}>
-        <Toolbar sx={{ gap: 2 }}>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
-            ISMS SmartFlow Portal
-          </Typography>
-          <Stack direction="row" spacing={1} alignItems="center">
+        <Toolbar sx={{ minHeight: '68px !important', px: { xs: 2, md: 3 }, justifyContent: 'space-between' }}>
+          <Stack direction="row" spacing={1.25} alignItems="center">
+            <Box sx={{ width: 4, height: 28, bgcolor: '#00b140', borderRadius: 1 }} />
+            <Box>
+              <Typography variant="h6" sx={{ color: '#ffffff', lineHeight: 1.1 }}>
+                SecureSync AI
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.72)', lineHeight: 1.2 }}>
+                ISMS SmartFlow
+              </Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" spacing={1.5} alignItems="center">
             <IconButton
               color="inherit"
               aria-label="Notifications"
               onClick={() => setActivePage('notifications')}
+              sx={{ width: 40, height: 40 }}
             >
               <Badge badgeContent={unreadNotifications} color="error" max={99}>
                 <NotificationsOutlinedIcon />
               </Badge>
             </IconButton>
-            <Avatar sx={{ bgcolor: 'secondary.main' }}>{user.displayName?.[0] || user.username?.[0] || 'U'}</Avatar>
             <Box
               onClick={(event) => setProfileAnchor(event.currentTarget)}
-              sx={{ cursor: 'pointer', minWidth: 110 }}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                minWidth: 0,
+                pl: 1.5,
+                borderLeft: '1px solid rgba(255, 255, 255, 0.22)',
+                cursor: 'pointer'
+              }}
               role="button"
               tabIndex={0}
             >
-              <Typography fontWeight={600}>{user.displayName}</Typography>
-              <Typography variant="body2" sx={{ opacity: 0.9 }}>{user.role}</Typography>
+              <AccountCircleOutlinedIcon sx={{ fontSize: 34, color: '#ffffff', flexShrink: 0 }} />
+              <Box sx={{ minWidth: 0, textAlign: 'left' }}>
+                <Typography noWrap sx={{ color: '#ffffff', fontWeight: 700, fontSize: '0.95rem', lineHeight: 1.25 }}>
+                  {user.displayName}
+                </Typography>
+                <Typography noWrap variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.72)', lineHeight: 1.2 }}>
+                  {user.role.replace('_', ' ')}
+                </Typography>
+              </Box>
             </Box>
             <Menu
               anchorEl={profileAnchor}

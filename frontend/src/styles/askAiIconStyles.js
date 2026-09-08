@@ -5,8 +5,8 @@ export const askAiRobotIconSx = {
   },
   heading: {
     fontSize: 18,
-    color: '#6f3ff5',
-    filter: 'drop-shadow(0 0 6px rgba(111, 63, 245, 0.30))'
+    color: '#001e50',
+    filter: 'drop-shadow(0 0 5px rgba(0, 30, 80, 0.18))'
   },
   responseAvatar: {
     fontSize: 15,
@@ -14,8 +14,8 @@ export const askAiRobotIconSx = {
   },
   responseLabel: {
     fontSize: 13,
-    color: '#6f3ff5',
-    filter: 'drop-shadow(0 0 5px rgba(111, 63, 245, 0.26))'
+    color: '#001e50',
+    filter: 'drop-shadow(0 0 4px rgba(0, 30, 80, 0.16))'
   },
   emptyStateAvatar: {
     fontSize: 20,
@@ -23,8 +23,8 @@ export const askAiRobotIconSx = {
   },
   input: {
     fontSize: 18,
-    color: '#0f62fe',
-    filter: 'drop-shadow(0 0 4px rgba(15, 98, 254, 0.24))'
+    color: '#001e50',
+    filter: 'drop-shadow(0 0 4px rgba(0, 30, 80, 0.16))'
   },
   buttonStart: {
     fontSize: 19,
@@ -32,8 +32,8 @@ export const askAiRobotIconSx = {
   },
   fab: {
     fontSize: 20,
-    color: '#dbeafe',
-    filter: 'drop-shadow(0 0 8px rgba(219, 234, 254, 0.58))'
+    color: '#ffffff',
+    filter: 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.32))'
   }
 };
 

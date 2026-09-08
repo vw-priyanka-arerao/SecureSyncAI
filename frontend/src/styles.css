@@ -1,3 +1,37 @@
+/* VW Head is used for headings and emphasis, VW Text for body copy. */
+@font-face {
+  font-family: 'VW Head';
+  src: url('/vwhead-regular.76bd8bfb41f622c4e94a.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VW Head';
+  src: url('/vwhead-bold.e6453f405832f201ebb9.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VW Text';
+  src: url('/vwtext-regular.1f1a3319c6e8ccfe6344.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold body copy maps to VW Head Bold so emphasis never renders as faux bold. */
+@font-face {
+  font-family: 'VW Text';
+  src: url('/vwhead-bold.e6453f405832f201ebb9.woff2') format('woff2');
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
 }
@@ -14,7 +48,20 @@ body,
 }
 
 body {
-  background: #f5f7fb;
+  background: #f5f5f5;
+  color: #000000;
+  font-family: 'VW Text', 'Segoe UI', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'VW Head', 'Segoe UI', Arial, sans-serif;
 }
 
 pre {

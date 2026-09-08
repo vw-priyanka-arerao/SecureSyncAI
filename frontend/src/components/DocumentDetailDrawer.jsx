@@ -213,7 +213,7 @@ export default function DocumentDetailDrawer({ open, documentId, user, api, onCl
                   {latestVersion ? (
                     <Box>
                       <Typography variant="h6" gutterBottom>Latest content</Typography>
-                      <Box sx={{ p: 2, bgcolor: '#0f172a', color: '#e2e8f0', borderRadius: 3 }}>
+                      <Box sx={{ p: 2, bgcolor: '#002733', color: '#ffffff', borderRadius: 1.5 }}>
                         <pre>{cleanContent(latestVersion.content)}</pre>
                       </Box>
                     </Box>

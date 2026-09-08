@@ -78,7 +78,7 @@ export default function NotificationsPage({ api, showMessage, onChanged }) {
             {notifications.map((notification) => (
               <ListItem
                 key={notification.id}
-                sx={{ px: 0, bgcolor: notification.dueAt && !notification.readFlag && new Date(notification.dueAt) < new Date() ? 'rgba(220, 38, 38, 0.08)' : 'transparent' }}
+                sx={{ px: 0, bgcolor: notification.dueAt && !notification.readFlag && new Date(notification.dueAt) < new Date() ? 'rgba(176, 0, 32, 0.08)' : 'transparent' }}
                 secondaryAction={
                   <Stack direction="row" spacing={1} alignItems="center">
                     <Chip label={notification.type} size="small" />
