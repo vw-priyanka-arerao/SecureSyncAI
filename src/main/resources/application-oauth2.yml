@@ -1,0 +1,19 @@
+app:
+  security:
+    oauth2:
+      enabled: true
+      principal-claim: ${OAUTH2_PRINCIPAL_CLAIM:preferred_username}
+      role-mapping:
+        employee: ${OAUTH2_ROLE_EMPLOYEE:EMPLOYEE,ISMS_EMPLOYEE}
+        sdm: ${OAUTH2_ROLE_SDM:SDM,ISMS_SDM}
+        pd-head: ${OAUTH2_ROLE_PD_HEAD:PD_HEAD,PDHEAD,ISMS_PD_HEAD}
+        admin: ${OAUTH2_ROLE_ADMIN:ADMIN,ISMS_ADMIN}
+        auditor: ${OAUTH2_ROLE_AUDITOR:AUDITOR,ISMS_AUDITOR}
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH2_ISSUER_URI:}
+

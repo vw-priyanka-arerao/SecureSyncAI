@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:securesync;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    default-property-inclusion: non_null
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+app:
+  cors:
+    allowed-origins: http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000
+  security:
+    demo-password: Password1!
+    oauth2:
+      enabled: false
+      principal-claim: preferred_username
+      role-mapping:
+        employee: EMPLOYEE,ISMS_EMPLOYEE
+        sdm: SDM,ISMS_SDM
+        pd-head: PD_HEAD,PDHEAD,ISMS_PD_HEAD
+        admin: ADMIN,ISMS_ADMIN
+        auditor: AUDITOR,ISMS_AUDITOR
+  notifications:
+    review-reminder-hours: 24
+    reminder-resend-hours: 24
+    reminder-scan-ms: 900000
+
