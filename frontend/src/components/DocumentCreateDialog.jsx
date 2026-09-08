@@ -42,6 +42,19 @@ export default function DocumentCreateDialog({ open, onClose, onCreate, user, re
     () => reviewerOptions.find((option) => option.email.toLowerCase() === form.reviewerUsername.trim().toLowerCase()),
     [form.reviewerUsername, reviewerOptions]
   );
+  const matchingReviewerOptions = useMemo(() => {
+    const query = form.reviewerUsername.trim().toLowerCase();
+    if (!query) {
+      return [];
+    }
+    return reviewerOptions.filter((option) => [
+      option.email,
+      option.username,
+      option.displayName,
+      option.name,
+      option.role
+    ].some((value) => value?.toLowerCase().includes(query)));
+  }, [form.reviewerUsername, reviewerOptions]);
 
   function updateField(name, value) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -116,7 +129,7 @@ export default function DocumentCreateDialog({ open, onClose, onCreate, user, re
           ) : null}
           <Autocomplete
             freeSolo
-            options={reviewerOptions}
+            options={matchingReviewerOptions}
             value={selectedReviewer || form.reviewerUsername}
             onChange={(_, value) => {
               const email = typeof value === 'string' ? value : value?.email || '';
@@ -125,6 +138,7 @@ export default function DocumentCreateDialog({ open, onClose, onCreate, user, re
             onInputChange={(_, value) => updateField('reviewerUsername', value)}
             getOptionLabel={(option) => typeof option === 'string' ? option : option.email}
             isOptionEqualToValue={(option, value) => option.email === value.email}
+            noOptionsText="No matching reviewer found"
             renderOption={(props, option) => (
               <li {...props} key={option.email}>
                 {option.role === 'DISTRIBUTION_LIST'

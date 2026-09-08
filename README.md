@@ -14,7 +14,7 @@ SecureSync AI is a runnable full-stack MVP for centralized ISMS document managem
 - Admin archive/restore for soft-deleted documents
 - Review-cycle and next-review metadata for expiry tracking
 - Floating `Ask AI` assistant launcher for role-aware document search
-- Swagger UI, H2 demo database support, PostgreSQL profile, and Docker Compose
+- Swagger UI, PostgreSQL as the default database, and Docker Compose
 
 ## Feature matrix
 
@@ -30,7 +30,7 @@ SecureSync AI is a runnable full-stack MVP for centralized ISMS document managem
 | Notifications | Yes | Read/unread state and reminder sweeps |
 | Audit logs | Yes | Filterable evidence trail by document |
 | Soft delete / restore | Yes | Admin archive and restore flow |
-| PostgreSQL runtime profile | Yes | Via Spring profile and environment variables |
+| PostgreSQL runtime | Yes | Default datasource via environment variables |
 | Docker Compose | Yes | Backend + frontend local container run |
 
 ## Architecture overview
@@ -58,7 +58,7 @@ SecureSync AI is a runnable full-stack MVP for centralized ISMS document managem
                         ▼
                ┌──────────────────┐
                │ JPA + Flyway DB  │
-               │  H2 / PostgreSQL │
+               │    PostgreSQL    │
                └──────────────────┘
 ```
 
@@ -82,7 +82,7 @@ SecureSync AI is a runnable full-stack MVP for centralized ISMS document managem
 - Data layer:
   - Spring Data JPA repositories
   - Flyway-managed schema migrations
-  - H2 for demos and PostgreSQL for deployment
+  - PostgreSQL for local, container, and deployment runtimes
 
 ## Current feature set
 
@@ -204,7 +204,6 @@ Users:
 - Spring Validation
 - Spring Actuator
 - Flyway
-- H2
 - PostgreSQL driver
 - SpringDoc OpenAPI
 
@@ -228,18 +227,38 @@ Users:
 - Java `21`
 - Maven
 - Node.js and npm
-- Optional: Docker / Docker Compose
+- Docker / Docker Compose (recommended for the local PostgreSQL instance)
 
 ## Run locally
 
-### 1) Start the backend
+### 1) Start PostgreSQL
+
+The default datasource is PostgreSQL. Start only the database service from the repository root:
+
+```bash
+docker compose up -d postgres
+```
+
+This creates database `securesync`, user `securesync`, password `securesync`, and persists data in the `securesync-postgres-data` Docker volume. Flyway creates and upgrades the schema automatically when the backend starts.
+
+### 2) Start the backend
 
 ```bash
 cd '/Users/u7nj73b/IdeaProjects/SecureSync AI'
 mvn spring-boot:run
 ```
 
-### 2) Start the backend in OAuth2 JWT mode (optional)
+The backend defaults to `jdbc:postgresql://localhost:5432/securesync`. Override the connection with:
+
+```bash
+export DB_URL='jdbc:postgresql://localhost:5432/securesync'
+export DB_USERNAME='securesync'
+export DB_PASSWORD='securesync'
+```
+
+On Windows PowerShell, use `$env:DB_URL`, `$env:DB_USERNAME`, and `$env:DB_PASSWORD` instead.
+
+### 3) Start the backend in OAuth2 JWT mode (optional)
 
 ```bash
 cd '/Users/u7nj73b/IdeaProjects/SecureSync AI'
@@ -255,7 +274,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=oauth2
 
 In OAuth2 mode, Basic Auth remains available for local/demo use, while JWT bearer tokens are accepted in parallel.
 
-### 3) Start the frontend
+### 4) Start the frontend
 
 ```bash
 export PATH="/opt/homebrew/bin:$PATH"
@@ -270,7 +289,6 @@ If needed, the frontend uses `VITE_API_BASE_URL` and defaults to `http://localho
 
 - Frontend: `http://localhost:5173`
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
-- H2 Console: `http://localhost:8080/h2-console`
 - Health: `http://localhost:8080/actuator/health`
 
 ## Screenshots
@@ -370,7 +388,7 @@ curl -u admin1:Password1! -H 'Content-Type: application/json' \
 | `/swagger-ui.html` | Interactive API documentation |
 | `/v3/api-docs` | OpenAPI schema |
 | `/actuator/health` | Health endpoint |
-| `/h2-console` | H2 database console for demo profile |
+| PostgreSQL | `localhost:5432`, database `securesync`, user `securesync` |
 
 ## Run tests
 
@@ -398,12 +416,15 @@ docker compose up --build
 
 Docker Compose exposes:
 
+- PostgreSQL on `localhost:5432`
 - backend on `http://localhost:8080`
 - frontend on `http://localhost:5173`
 
+The backend waits for PostgreSQL to pass its healthcheck before starting. Stop containers without deleting database data with `docker compose down`; remove the persisted database volume only when you intentionally want a clean database: `docker compose down -v`.
+
 ## Deployment notes
 
-For PostgreSQL, run with the `postgres` profile and provide:
+PostgreSQL is the default runtime datasource. Provide these variables when connecting to an external database:
 
 - `DB_URL`
 - `DB_USERNAME`
@@ -411,13 +432,15 @@ For PostgreSQL, run with the `postgres` profile and provide:
 
 ```bash
 cd '/Users/u7nj73b/IdeaProjects/SecureSync AI'
-mvn spring-boot:run -Dspring-boot.run.profiles=postgres
+mvn spring-boot:run
 ```
 
 Additional notes:
 
 - Schema lifecycle is managed by Flyway migrations in `src/main/resources/db/migration`
 - JPA runs in `ddl-auto: validate` mode to catch schema drift
+- The `test` Spring profile uses an in-memory H2 database only for automated tests; it is not used by the normal application or Docker Compose runtime
+- PostgreSQL must be reachable before startup; a missing or incorrect password produces a datasource authentication error
 - JWT integration coverage is available in `src/test/java/vwg/cms/c4c/OAuth2SecurityIntegrationTests.java`
 
 ## Latest UI updates

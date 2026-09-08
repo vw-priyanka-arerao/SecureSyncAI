@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/health", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/actuator/health", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(appUserService)
                 .httpBasic(Customizer.withDefaults());

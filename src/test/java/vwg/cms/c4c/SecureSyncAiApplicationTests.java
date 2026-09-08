@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import vwg.cms.c4c.entity.Notification;
@@ -27,6 +28,7 @@ import vwg.cms.c4c.repository.NotificationRepository;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 class SecureSyncAiApplicationTests {
 
@@ -153,15 +155,15 @@ class SecureSyncAiApplicationTests {
                 .andReturn();
 
         JsonNode users = objectMapper.readTree(usersResult.getResponse().getContentAsString());
-        assertThat(users).hasSize(3);
+        assertThat(users).hasSize(4);
         assertThat(StreamSupport.stream(users.spliterator(), false)
                 .map(node -> node.get("username").asText())
                 .toList())
-                .containsExactlyInAnyOrder("sdm1", "pdhead1", "admin1");
+                .containsExactlyInAnyOrder("sdm1", "pdhead1", "subadmin1", "admin1");
 
         MockMultipartFile file = new MockMultipartFile(
                 "file",
-                "control-policy.txt",
+                "control-policy.pdf",
                 MediaType.TEXT_PLAIN_VALUE,
                 "Scope owner review approval control compliance evidence".getBytes()
         );

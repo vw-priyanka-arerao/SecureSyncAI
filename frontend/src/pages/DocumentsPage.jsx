@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DocumentCreateDialog from '../components/DocumentCreateDialog';
-import DistributionListDialog from '../components/DistributionListDialog';
 import DocumentDetailDrawer from '../components/DocumentDetailDrawer';
 import StatusChip from '../components/StatusChip';
 
@@ -29,15 +28,12 @@ export default function DocumentsPage({ api, user, showMessage }) {
   const [documents, setDocuments] = useState([]);
   const [users, setUsers] = useState([]);
   const [reviewers, setReviewers] = useState([]);
-  const [distributionLists, setDistributionLists] = useState([]);
   const [error, setError] = useState('');
   const [openCreate, setOpenCreate] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
   const [showDeleted, setShowDeleted] = useState(false);
-  const [openCreateDl, setOpenCreateDl] = useState(false);
 
   const isAdmin = user?.role === 'ADMIN';
-  const canManageDistributionLists = isAdmin || user?.role === 'SUB_ADMIN';
 
   const loadDocuments = useCallback(async () => {
     setError('');
@@ -57,7 +53,6 @@ export default function DocumentsPage({ api, user, showMessage }) {
         api.listDistributionLists()
       ]);
       setUsers(allUsers);
-      setDistributionLists(lists);
       setReviewers([
         ...reviewerUsers,
         ...lists.map((list) => ({ ...list, role: 'DISTRIBUTION_LIST', displayName: list.name }))
@@ -102,12 +97,6 @@ export default function DocumentsPage({ api, user, showMessage }) {
     await loadDocuments();
   }
 
-  async function handleCreateDistributionList(payload) {
-    await api.createDistributionList(payload);
-    showMessage('Distribution List created successfully', 'success');
-    await loadUsers();
-  }
-
   return (
     <Stack spacing={3}>
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems={{ xs: 'stretch', md: 'center' }} spacing={2}>
@@ -121,9 +110,6 @@ export default function DocumentsPage({ api, user, showMessage }) {
               control={<Switch checked={showDeleted} onChange={(event) => setShowDeleted(event.target.checked)} />}
               label="Show deleted"
             />
-          ) : null}
-          {canManageDistributionLists ? (
-            <Button variant="outlined" onClick={() => setOpenCreateDl(true)}>Create DL</Button>
           ) : null}
           <Button startIcon={<AddIcon />} variant="contained" onClick={() => setOpenCreate(true)}>
             New document
@@ -192,13 +178,6 @@ export default function DocumentsPage({ api, user, showMessage }) {
         user={user}
         reviewerOptions={reviewers}
         ownerOptions={users}
-      />
-
-      <DistributionListDialog
-        open={openCreateDl}
-        onClose={() => setOpenCreateDl(false)}
-        onCreate={handleCreateDistributionList}
-        memberOptions={users}
       />
 
       <DocumentDetailDrawer

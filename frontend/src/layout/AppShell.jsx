@@ -67,10 +67,9 @@ export default function AppShell({ user, api, onLogout }) {
   }, [refreshUnreadNotifications]);
 
   useEffect(() => {
-    if (!canManageDistributionLists) {
-      return;
+    if (canManageDistributionLists) {
+      api.listUsers(false).then(setMemberOptions).catch(() => undefined);
     }
-    api.listUsers(false).then(setMemberOptions).catch(() => undefined);
   }, [api, canManageDistributionLists]);
 
   async function createDistributionList(payload) {
@@ -149,7 +148,10 @@ export default function AppShell({ user, api, onLogout }) {
             <Typography><strong>Role:</strong> {user.role}</Typography>
             {canManageDistributionLists ? (
               <Box sx={{ pt: 2 }}>
-                <Button variant="contained" onClick={() => { setSettingsOpen(false); setCreateDlOpen(true); }}>
+                <Button
+                  variant="contained"
+                  onClick={() => { setSettingsOpen(false); setCreateDlOpen(true); }}
+                >
                   Create DL
                 </Button>
               </Box>
